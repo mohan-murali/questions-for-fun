@@ -7,6 +7,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "resolutions": {
+    "styled-components": "^5"
+  },
   "dependencies": {
     "next": "12.0.4",
     "react": "17.0.2",
@@ -15,8 +18,13 @@
   "devDependencies": {
     "@types/node": "16.11.10",
     "@types/react": "17.0.37",
+    "@types/styled-components": "^5.1.15",
     "eslint": "7",
     "eslint-config-next": "12.0.4",
+    "primeflex": "2.0.0",
+    "primeicons": "^5.0.0",
+    "primereact": "^7.0.1",
+    "styled-components": "^5.3.3",
     "typescript": "4.5.2"
   }
 }

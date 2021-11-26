@@ -2,8 +2,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: var(--font-family);
+  background-color: var(--surface-b);
 }
 
 a {
@@ -13,4 +13,9 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.app {
+  height: 100vh;
+  width: 100vw;
 }
