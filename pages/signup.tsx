@@ -1,10 +1,12 @@
 import { NextPage } from "next";
-import { Card } from "primereact/card";
 import { Button } from "primereact/button";
+import { Card } from "primereact/card";
+import { RadioButton } from "primereact/radiobutton";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { TextInput } from "../components/TextInput";
 
-const Login: NextPage = () => {
+const SignUp: NextPage = () => {
   const {
     handleSubmit,
     register,
@@ -18,8 +20,16 @@ const Login: NextPage = () => {
   return (
     <main>
       <div className="app p-d-flex p-jc-center p-ai-center">
-        <Card className="card p-d-flex p-p-3 p-shadow-4">
+        <Card className="p-d-flex p-p-3 p-shadow-4">
           <form onSubmit={handleSubmit(onSubmit)}>
+            <TextInput
+              id="name"
+              required
+              register={register}
+              isError={!!errors?.email?.type}
+              validationMessage="Name is required"
+              label="Name"
+            />
             <TextInput
               id="email"
               required
@@ -43,11 +53,21 @@ const Login: NextPage = () => {
               validationMessage="Password is required"
               label="Password"
             />
+            <span className="p-field-radiobutton">
+              {/* <input {...register("type")} type="radio" value="student" />
+              <input {...register("type")} type="radio" value="teacher" /> */}
+              <RadioButton value="student" {...register("type")} />
+            </span>
+            {errors?.type?.type && (
+              <small id="type-help" className="p-error p-d-block">
+                you must select if you are teacher or student
+              </small>
+            )}
             <Button
               type="submit"
               icon="pi pi-check"
               iconPos="right"
-              label="Login"
+              label="Sign Up"
               className="p-mt-2"
             />
           </form>
@@ -57,4 +77,4 @@ const Login: NextPage = () => {
   );
 };
 
-export default Login;
+export default SignUp;
