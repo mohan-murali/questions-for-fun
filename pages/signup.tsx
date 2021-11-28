@@ -3,13 +3,14 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { RadioButton } from "primereact/radiobutton";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { TextInput } from "../components/TextInput";
 
 const SignUp: NextPage = () => {
   const {
     handleSubmit,
     register,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -53,11 +54,38 @@ const SignUp: NextPage = () => {
               validationMessage="Password is required"
               label="Password"
             />
-            <span className="p-field-radiobutton">
-              {/* <input {...register("type")} type="radio" value="student" />
-              <input {...register("type")} type="radio" value="teacher" /> */}
-              <RadioButton value="student" {...register("type")} />
-            </span>
+            <label className="p-d-block p-my-3">
+              Are you a teacher or student
+            </label>
+            <Controller
+              name="type"
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { value, onChange } }) => (
+                <>
+                  <div className="p-field-radiobutton">
+                    <RadioButton
+                      inputId="teacher"
+                      value="teacher"
+                      onChange={(e) => onChange(e.value)}
+                      checked={value === "teacher"}
+                    />
+                    <label htmlFor="teacher">Teacher</label>
+                  </div>
+                  <div className="p-field-radiobutton">
+                    <RadioButton
+                      inputId="student"
+                      value="student"
+                      onChange={(e) => onChange(e.value)}
+                      checked={value === "student"}
+                    />
+                    <label htmlFor="student">Student</label>
+                  </div>
+                </>
+              )}
+            />
             {errors?.type?.type && (
               <small id="type-help" className="p-error p-d-block">
                 you must select if you are teacher or student
