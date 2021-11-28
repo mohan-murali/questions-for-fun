@@ -1,3 +1,4 @@
+import axios from "axios";
 import { NextPage } from "next";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
@@ -5,6 +6,13 @@ import { RadioButton } from "primereact/radiobutton";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { TextInput } from "../components/TextInput";
+
+interface SignUpFormData {
+  name: string;
+  email: string;
+  password: string;
+  type: string;
+}
 
 const SignUp: NextPage = () => {
   const {
@@ -14,20 +22,26 @@ const SignUp: NextPage = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: SignUpFormData) => {
     console.log(data);
+    try {
+      var res = await axios.post("/api/signup", data);
+      console.log(res);
+    } catch (ex) {
+      console.log(ex);
+    }
   };
 
   return (
     <main>
       <div className="app p-d-flex p-jc-center p-ai-center">
-        <Card className="p-d-flex p-p-3 p-shadow-4">
+        <Card className="card p-d-flex p-p-3 p-shadow-4">
           <form onSubmit={handleSubmit(onSubmit)}>
             <TextInput
               id="name"
               required
               register={register}
-              isError={!!errors?.email?.type}
+              isError={!!errors?.name?.type}
               validationMessage="Name is required"
               label="Name"
             />
