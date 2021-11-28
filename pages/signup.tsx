@@ -23,9 +23,8 @@ const SignUp: NextPage = () => {
   } = useForm();
 
   const onSubmit = async (data: SignUpFormData) => {
-    console.log(data);
     try {
-      var res = await axios.post("/api/signup", data);
+      const res = await axios.post("/api/signup", data);
       console.log(res);
     } catch (ex) {
       console.log(ex);
@@ -62,6 +61,7 @@ const SignUp: NextPage = () => {
             />
             <TextInput
               id="password"
+              type="password"
               required
               register={register}
               isError={!!errors?.password?.type}
