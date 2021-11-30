@@ -6,8 +6,9 @@ import { RadioButton } from "primereact/radiobutton";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { TextInput } from "../components/TextInput";
+import { useAuth } from "../components/useAuth";
 
-interface SignUpFormData {
+export interface SignUpFormData {
   name: string;
   email: string;
   password: string;
@@ -22,13 +23,10 @@ const SignUp: NextPage = () => {
     formState: { errors },
   } = useForm();
 
+  const { signUp } = useAuth();
+
   const onSubmit = async (data: SignUpFormData) => {
-    try {
-      const res = await axios.post("/api/signup", data);
-      console.log(res);
-    } catch (ex) {
-      console.log(ex);
-    }
+    signUp(data);
   };
 
   return (

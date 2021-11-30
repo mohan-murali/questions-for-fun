@@ -4,6 +4,11 @@ import { Button } from "primereact/button";
 import { useForm } from "react-hook-form";
 import { TextInput } from "../components/TextInput";
 
+export interface LoginFormData {
+  email: string;
+  password: string;
+}
+
 const Login: NextPage = () => {
   const {
     handleSubmit,
