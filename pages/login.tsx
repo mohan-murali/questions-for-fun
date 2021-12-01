@@ -3,6 +3,7 @@ import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { useForm } from "react-hook-form";
 import { TextInput } from "../components/TextInput";
+import { useAuth } from "../components/useAuth";
 
 export interface LoginFormData {
   email: string;
@@ -16,8 +17,10 @@ const Login: NextPage = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const { login } = useAuth();
+
+  const onSubmit = (data: LoginFormData) => {
+    login(data);
   };
 
   return (
