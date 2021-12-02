@@ -17,7 +17,7 @@ export default async function handler(
     if (result.status === 200) {
       return res.status(200).json(result.data);
     }
-    console.log(result);
+    console.log(result.data);
   } catch (ex) {
     console.log(ex);
   }
