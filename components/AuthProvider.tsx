@@ -4,9 +4,17 @@ import { LoginFormData } from "../pages/login";
 import { SignUpFormData } from "../pages/signup";
 
 export interface AuthProviderContextProps {
+  user?: User;
   authToken: string | null;
   signUp: (data: SignUpFormData) => void;
   login: (data: LoginFormData) => void;
+  signOut: () => void;
+}
+
+export interface User {
+  name: string;
+  email: string;
+  type: string;
 }
 
 export const AuthProviderContext = createContext<AuthProviderContextProps>(
@@ -15,6 +23,7 @@ export const AuthProviderContext = createContext<AuthProviderContextProps>(
 
 export const AuthProvider: React.FC<any> = ({ children }) => {
   const [authToken, setAuthToken] = useState<string | null>(null);
+  const [user, setUser] = useState<User | undefined>();
 
   const getAuthToken = () => {
     if (window) {
@@ -29,6 +38,7 @@ export const AuthProvider: React.FC<any> = ({ children }) => {
       if (window) {
         window.localStorage.setItem("auth-token", res.data.token);
       }
+      setUser({ ...res.data.user });
     } catch (ex) {
       console.log(ex);
     }
@@ -40,15 +50,24 @@ export const AuthProvider: React.FC<any> = ({ children }) => {
       if (window) {
         window.localStorage.setItem("auth-token", res.data.token);
       }
+      setUser({ ...res.data.user });
     } catch (ex) {
       console.log(ex);
     }
   };
 
+  const signOut = () => {
+    window.localStorage.removeItem("auth-token");
+    setUser(undefined);
+    setAuthToken(null);
+  };
+
   useEffect(() => getAuthToken(), [authToken]);
 
   return (
-    <AuthProviderContext.Provider value={{ authToken, signUp, login }}>
+    <AuthProviderContext.Provider
+      value={{ user, authToken, signUp, login, signOut }}
+    >
       {children}
     </AuthProviderContext.Provider>
   );
