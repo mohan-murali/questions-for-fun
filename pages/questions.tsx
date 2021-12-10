@@ -53,7 +53,7 @@ const QuestionsPage: NextPage = () => {
               {...register("option1", { required: true })}
             />
           </div>
-          {errors?.question && (
+          {errors?.option1 && (
             <small id="question-help" className="p-error p-d-block">
               options are required
             </small>
@@ -66,7 +66,7 @@ const QuestionsPage: NextPage = () => {
               {...register("option2", { required: true })}
             />
           </div>
-          {errors?.question && (
+          {errors?.option2 && (
             <small id="question-help" className="p-error p-d-block">
               options are required
             </small>
@@ -79,7 +79,7 @@ const QuestionsPage: NextPage = () => {
               {...register("option3", { required: true })}
             />
           </div>
-          {errors?.question && (
+          {errors?.option3 && (
             <small id="question-help" className="p-error p-d-block">
               options are required
             </small>
@@ -92,7 +92,7 @@ const QuestionsPage: NextPage = () => {
               {...register("option4", { required: true })}
             />
           </div>
-          {errors?.question && (
+          {errors?.option4 && (
             <small id="question-help" className="p-error p-d-block">
               options are required
             </small>
@@ -147,11 +147,18 @@ const QuestionsPage: NextPage = () => {
               </div>
             )}
           />
-          {errors?.question && (
+          {errors?.correctAnswer && (
             <small id="question-help" className="p-error p-d-block">
               you must select a correct answer
             </small>
           )}
+          <Button
+            type="submit"
+            icon="pi pi-check"
+            iconPos="right"
+            label="Next"
+            className="p-mt-2"
+          />
         </form>
       </main>
       <footer>Built with Nextjs and Prime React</footer>
