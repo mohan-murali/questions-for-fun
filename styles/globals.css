@@ -15,12 +15,33 @@ a {
   box-sizing: border-box;
 }
 
+header {
+  height: 6vh;
+}
+
+main {
+  height: 88vh;
+}
+
+footer {
+  height: 6vh;
+}
+
 .app {
   height: 100vh;
   width: 100vw;
 }
 
 .card {
-  width: 300px;
-  border-radius: 10px;
+  width: 19rem;
+  border-radius: 1.2rem;
+}
+
+.app-header {
+  background-color: var(--blue-600);
+}
+
+.card-questions-form {
+  margin: 0 auto;
+  max-width: 100rem;
 }
