@@ -25,6 +25,7 @@ main {
 
 footer {
   height: 6vh;
+  background-color: var(--surface-a);
 }
 
 .app {

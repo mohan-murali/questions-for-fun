@@ -6,6 +6,7 @@ import { RadioButton } from "primereact/radiobutton";
 import { Controller, useForm } from "react-hook-form";
 import Navbar from "../components/Navbar";
 import { Card } from "primereact/card";
+import { Footer } from "../components/Footer";
 
 const QuestionsPage: NextPage = () => {
   const {
@@ -28,7 +29,7 @@ const QuestionsPage: NextPage = () => {
             className="p-fluid p-formgrid p-grid"
           >
             <div className="p-field p-col-12">
-              <label htmlFor="question">Address</label>
+              <label htmlFor="question">Enter the Question</label>
               <InputTextarea
                 id="question"
                 rows={4}
@@ -42,7 +43,7 @@ const QuestionsPage: NextPage = () => {
               )}
             </div>
             <div className="p-field p-col-12 p-md-6">
-              <label htmlFor="option1">1st Option</label>
+              <label htmlFor="option1">Enter 1st Option</label>
               <InputText
                 id="option1"
                 type="text"
@@ -55,7 +56,7 @@ const QuestionsPage: NextPage = () => {
               )}
             </div>
             <div className="p-field p-col-12 p-md-6">
-              <label htmlFor="option2">2nd Option</label>
+              <label htmlFor="option2">Enter 2nd Option</label>
               <InputText
                 id="option2"
                 type="text"
@@ -68,7 +69,7 @@ const QuestionsPage: NextPage = () => {
               )}
             </div>
             <div className="p-field p-col-12 p-md-6">
-              <label htmlFor="option3">3rd Option</label>
+              <label htmlFor="option3">Enter 3rd Option</label>
               <InputText
                 id="option3"
                 type="text"
@@ -81,7 +82,7 @@ const QuestionsPage: NextPage = () => {
               )}
             </div>
             <div className="p-field p-col-12 p-md-6">
-              <label htmlFor="option4">4rth Option</label>
+              <label htmlFor="option4">Enter 4rth Option</label>
               <InputText
                 id="option4"
                 type="text"
@@ -93,7 +94,7 @@ const QuestionsPage: NextPage = () => {
                 </small>
               )}
             </div>
-            <div>
+            <div className="p-pl-3">
               <label className="p-d-block p-my-3">
                 Select the right answer
               </label>
@@ -156,7 +157,7 @@ const QuestionsPage: NextPage = () => {
           </form>
         </Card>
       </main>
-      <footer className="p-shadow-2">Built with Nextjs and Prime React</footer>
+      <Footer />
     </>
   );
 };
