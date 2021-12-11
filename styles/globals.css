@@ -45,4 +45,17 @@ footer {
 .card-questions-form {
   margin: 0 auto;
   max-width: 100rem;
+  height: 100%;
+}
+
+.card-questions-form .p-card-body {
+  height: 100%;
+}
+
+.card-questions-form .p-card-content {
+  height: 100%;
+}
+
+.card-questions-form form {
+  height: 100%;
 }
