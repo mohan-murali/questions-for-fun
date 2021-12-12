@@ -1,10 +1,12 @@
+import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { RadioButton } from "primereact/radiobutton";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import * as yup from "yup";
 
 interface QuestionsCardProps {
   pageNo: number;
@@ -22,6 +24,15 @@ export interface QuestionFrom {
   correctAnswer: string;
 }
 
+const nextFormSchema = yup.object().shape({
+  question: yup.string().trim().required().min(10),
+  option1: yup.string().trim().required(),
+  option2: yup.string().trim().required(),
+  option3: yup.string().trim().required(),
+  option4: yup.string().trim().required(),
+  correctAnswer: yup.string().required(),
+});
+
 const QuestionsCard: React.FC<QuestionsCardProps> = ({
   pageNo,
   question,
@@ -34,7 +45,9 @@ const QuestionsCard: React.FC<QuestionsCardProps> = ({
     control,
     setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(nextFormSchema),
+  });
 
   const onSubmit = (data: QuestionFrom) => {
     submit(data);
@@ -72,66 +85,46 @@ const QuestionsCard: React.FC<QuestionsCardProps> = ({
         <div className="p-fluid p-formgrid p-grid">
           <div className="p-field p-col-12">
             <label htmlFor="question">Enter the Question</label>
-            <InputTextarea
-              id="question"
-              rows={4}
-              {...register("question", { required: true })}
-            />
+            <InputTextarea id="question" rows={4} {...register("question")} />
             {errors?.question && (
               <small id="question-help" className="p-error p-d-block">
                 {" "}
-                you must specify a question
+                you must specify a question with atleast 10 characters
               </small>
             )}
           </div>
           <div className="p-field p-col-12 p-md-6">
             <label htmlFor="option1">Enter 1st Option</label>
-            <InputText
-              id="option1"
-              type="text"
-              {...register("option1", { required: true })}
-            />
+            <InputText id="option1" type="text" {...register("option1")} />
             {errors?.option1 && (
-              <small id="question-help" className="p-error p-d-block">
+              <small id="option1-help" className="p-error p-d-block">
                 options are required
               </small>
             )}
           </div>
           <div className="p-field p-col-12 p-md-6">
             <label htmlFor="option2">Enter 2nd Option</label>
-            <InputText
-              id="option2"
-              type="text"
-              {...register("option2", { required: true })}
-            />
+            <InputText id="option2" type="text" {...register("option2")} />
             {errors?.option2 && (
-              <small id="question-help" className="p-error p-d-block">
+              <small id="option2-help" className="p-error p-d-block">
                 options are required
               </small>
             )}
           </div>
           <div className="p-field p-col-12 p-md-6">
             <label htmlFor="option3">Enter 3rd Option</label>
-            <InputText
-              id="option3"
-              type="text"
-              {...register("option3", { required: true })}
-            />
+            <InputText id="option3" type="text" {...register("option3")} />
             {errors?.option3 && (
-              <small id="question-help" className="p-error p-d-block">
+              <small id="option3-help" className="p-error p-d-block">
                 options are required
               </small>
             )}
           </div>
           <div className="p-field p-col-12 p-md-6">
             <label htmlFor="option4">Enter 4rth Option</label>
-            <InputText
-              id="option4"
-              type="text"
-              {...register("option4", { required: true })}
-            />
+            <InputText id="option4" type="text" {...register("option4")} />
             {errors?.option4 && (
-              <small id="question-help" className="p-error p-d-block">
+              <small id="option4-help" className="p-error p-d-block">
                 options are required
               </small>
             )}
@@ -141,7 +134,6 @@ const QuestionsCard: React.FC<QuestionsCardProps> = ({
             <Controller
               name="correctAnswer"
               control={control}
-              rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <div className="p-formgroup-inline">
                   <div className="p-field-checkbox">
@@ -188,7 +180,7 @@ const QuestionsCard: React.FC<QuestionsCardProps> = ({
               )}
             />
             {errors?.correctAnswer && (
-              <small id="question-help" className="p-error p-d-block">
+              <small id="correct-answer-help" className="p-error p-d-block">
                 you must select a correct answer
               </small>
             )}

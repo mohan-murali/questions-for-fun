@@ -6,7 +6,7 @@ import QuestionsCard, { QuestionFrom } from "../components/QuestionsCard";
 
 const QuestionsPage: NextPage = () => {
   const [pageNo, setPageNo] = useState(0);
-  const [questions, setQuestions] = useState<any>({});
+  const [questions, setQuestions] = useState<any>([]);
 
   const onSubmit = (data: QuestionFrom) => {
     console.log({ [`question${pageNo}`]: data });
