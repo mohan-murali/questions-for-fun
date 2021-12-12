@@ -6,13 +6,13 @@ import QuestionsCard, { QuestionFrom } from "../components/QuestionsCard";
 
 const QuestionsPage: NextPage = () => {
   const [pageNo, setPageNo] = useState(0);
-  const [questions, setQuestions] = useState<any>([]);
+  const [questions, setQuestions] = useState<any>({});
 
   const onSubmit = (data: QuestionFrom) => {
     console.log({ [`question${pageNo}`]: data });
     if (pageNo < 10) {
       setPageNo(pageNo + 1);
-      setQuestions([...questions, data]);
+      setQuestions({ ...questions, [`question${pageNo}`]: data });
     } else {
       console.log(questions);
     }
@@ -30,7 +30,7 @@ const QuestionsPage: NextPage = () => {
         <QuestionsCard
           key={pageNo}
           submit={onSubmit}
-          question={questions[pageNo]}
+          question={questions[`question${pageNo}`]}
           pageNo={pageNo}
           onPrevious={onPrevious}
         />
