@@ -12,7 +12,7 @@ const QuestionsPage: NextPage = () => {
     console.log({ [`question${pageNo}`]: data });
     if (pageNo < 10) {
       setPageNo(pageNo + 1);
-      setQuestions({ ...questions, [`question${pageNo}`]: data });
+      setQuestions({ ...questions, [`question${pageNo + 1}`]: data });
     } else {
       console.log(questions);
     }

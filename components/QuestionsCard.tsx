@@ -187,7 +187,11 @@ const QuestionsCard: React.FC<QuestionsCardProps> = ({
           </div>
         </div>
         <div className="p-d-flex p-jc-center p-flex-wrap">
-          <Button type="submit" label="Next" className="p-mt-2 p-mr-2 p-sm-4" />
+          <Button
+            type="submit"
+            label={pageNo < 9 ? "Next" : "Submit"}
+            className="p-mt-2 p-mr-2 p-sm-4"
+          />
           <Button
             type="button"
             label="Back"
