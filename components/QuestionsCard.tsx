@@ -3,23 +3,65 @@ import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { RadioButton } from "primereact/radiobutton";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 interface QuestionsCardProps {
-  submit: (data: any) => void;
+  pageNo: number;
+  question?: any;
+  onPrevious: () => void;
+  submit: (data: QuestionFrom) => void;
 }
 
-const QuestionsCard: React.FC<QuestionsCardProps> = ({ submit }) => {
+export interface QuestionFrom {
+  quesiton: string;
+  option1: string;
+  option2: string;
+  option3: string;
+  option4: string;
+  correctAnswer: string;
+}
+
+const QuestionsCard: React.FC<QuestionsCardProps> = ({
+  pageNo,
+  question,
+  onPrevious,
+  submit,
+}) => {
   const {
     handleSubmit,
     register,
     control,
+    setValue,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: QuestionFrom) => {
     submit(data);
   };
+
+  const resetFormDetail = (detail?: QuestionFrom) => {
+    if (detail) {
+      const parsedDetail: any = {
+        ...detail,
+      };
+
+      Object.keys(parsedDetail).forEach((k) => {
+        if (parsedDetail[k]) {
+          setValue(k, (parsedDetail as any)[k], {
+            shouldDirty: true,
+          });
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    console.log(question, pageNo);
+    if (question) {
+      resetFormDetail(question);
+    }
+  }, [question, resetFormDetail]);
 
   return (
     <Card className="card-questions-form">
@@ -155,8 +197,10 @@ const QuestionsCard: React.FC<QuestionsCardProps> = ({ submit }) => {
         <div className="p-d-flex p-jc-center p-flex-wrap">
           <Button type="submit" label="Next" className="p-mt-2 p-mr-2 p-sm-4" />
           <Button
-            type="submit"
+            type="button"
             label="Back"
+            disabled={pageNo < 1}
+            onClick={onPrevious}
             className="p-mt-2 p-sm-4 p-button-outlined p-button-secondary"
           />
         </div>
