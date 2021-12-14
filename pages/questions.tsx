@@ -1,16 +1,24 @@
 import { NextPage } from "next";
 import Navbar from "../components/Navbar";
 import { Footer } from "../components/Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../components/useAuth";
 import QuestionsCard, { QuestionFrom } from "../components/QuestionsCard";
 import axios from "axios";
+import { useRouter } from "next/dist/client/router";
 
 const QuestionsPage: NextPage = () => {
   const [pageNo, setPageNo] = useState(0);
   const [questions, setQuestions] = useState<any>({});
   const [question, setQuestion] = useState<any>({});
+  const router = useRouter();
   const { authToken } = useAuth();
+
+  useEffect(() => {
+    if (!authToken) {
+      router.replace("/login");
+    }
+  }, [authToken, router]);
 
   const onSubmit = async (data: QuestionFrom) => {
     console.log({ [`question${pageNo}`]: data });
