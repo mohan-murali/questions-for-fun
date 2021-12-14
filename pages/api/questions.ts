@@ -1,4 +1,4 @@
-import axios, { AxiosRequestHeaders } from "axios";
+import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
@@ -9,19 +9,23 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  console.log(req.headers["x-auth-token"]);
   try {
     const result = await axios.post(
       `${process.env.SERVER_URL}/test`,
-      req.body,
+      { questions: req.body },
       {
-        headers: req.headers as AxiosRequestHeaders,
+        headers: {
+          "content-type": "application/json",
+          "x-auth-token": (req.headers["x-auth-token"] || "") as string,
+        },
       }
     );
     if (result.status === 200) {
       return res.status(200).json(result.data);
     }
     console.log(result.data);
-  } catch (ex) {
-    console.log(ex);
+  } catch (ex: any) {
+    console.log(ex.message);
   }
 }

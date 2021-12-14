@@ -12,41 +12,45 @@ const QuestionsPage: NextPage = () => {
   const [questions, setQuestions] = useState<any>({});
   const [question, setQuestion] = useState<any>({});
   const router = useRouter();
-  const { authToken } = useAuth();
+  const { authToken, fetchedToken } = useAuth();
 
   useEffect(() => {
-    if (!authToken) {
+    if (!authToken && fetchedToken) {
       router.replace("/login");
     }
   }, [authToken, router]);
 
+  const submitData = async () => {
+    const requestedQuestions = Object.keys(questions).map((x) => ({
+      question: questions[x].question,
+      options: [
+        { id: 1, value: questions[x].option1 },
+        { id: 2, value: questions[x].option2 },
+        { id: 3, value: questions[x].option3 },
+        { id: 4, value: questions[x].option4 },
+      ],
+      correctAnswerId: parseInt(questions[x].correctAnswer, 10),
+    }));
+    try {
+      const res = await axios.post("api/questions", requestedQuestions, {
+        headers: {
+          "content-type": "application/json",
+          "x-auth-token": authToken || "",
+        },
+      });
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
+
   const onSubmit = async (data: QuestionFrom) => {
     console.log({ [`question${pageNo}`]: data });
-    if (pageNo < 10) {
+    if (pageNo < 5) {
       setPageNo(pageNo + 1);
       setQuestions({ ...questions, [`question${pageNo + 1}`]: data });
     } else {
       console.log(questions);
-      const requestedQuestions = Object.keys(questions).map((x) => ({
-        question: questions[x].question,
-        options: [
-          questions[x].option1,
-          questions[x].option2,
-          questions[x].option3,
-          questions[x].option4,
-        ],
-        correctAnswerId: questions[x].correctAsnwer,
-      }));
-      try {
-        const res = await axios.post("api/questions", requestedQuestions, {
-          headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": authToken || "",
-          },
-        });
-      } catch (ex) {
-        console.log(ex);
-      }
+      await submitData();
     }
   };
 

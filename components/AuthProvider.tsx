@@ -9,6 +9,7 @@ export interface AuthProviderContextProps {
   signUp: (data: SignUpFormData) => void;
   login: (data: LoginFormData) => void;
   signOut: () => void;
+  fetchedToken: boolean;
 }
 
 export interface User {
@@ -22,6 +23,7 @@ export const AuthProviderContext = createContext<AuthProviderContextProps>(
 );
 
 export const AuthProvider: React.FC<any> = ({ children }) => {
+  const [fetchedToken, setFetchedTokenn] = useState(false);
   const [authToken, setAuthToken] = useState<string | null>(null);
   const [user, setUser] = useState<User | undefined>();
 
@@ -29,6 +31,7 @@ export const AuthProvider: React.FC<any> = ({ children }) => {
     if (window) {
       const token = window.localStorage.getItem("auth-token");
       setAuthToken(token);
+      setFetchedTokenn(true);
     }
   };
 
@@ -62,11 +65,14 @@ export const AuthProvider: React.FC<any> = ({ children }) => {
     setAuthToken(null);
   };
 
-  useEffect(() => getAuthToken(), [authToken]);
+  useEffect(() => {
+    setFetchedTokenn(false);
+    getAuthToken();
+  }, [authToken]);
 
   return (
     <AuthProviderContext.Provider
-      value={{ user, authToken, signUp, login, signOut }}
+      value={{ user, authToken, signUp, login, signOut, fetchedToken }}
     >
       {children}
     </AuthProviderContext.Provider>
